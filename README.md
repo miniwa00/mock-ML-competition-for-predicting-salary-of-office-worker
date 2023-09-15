@@ -152,6 +152,19 @@ Employee data and salary from a specific company
 
 ![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/35cded89-073e-4a50-b17f-08ded5fb9749)
 
+- **Conclusion**
+시간과 성능의 측면에서 이번 프로젝트에서는 Catboost 모델이 LightGBM 모델보다 나았습니다.  
+또한 텍스트 분석 기법을 적절히 도입하는 것이 성능을 크게 높일 수 있다는 것을 깨달았습니다.
 
 ### What needs to improve?
 * * *
+
+1. **Hyperparameter tuning**  
+   하이퍼파라미터 튜닝을 위해 Grid Search와 같은 기술을 이용할 수 있습니다.  
+   하이퍼파라미터의 값을 바꾸는 것에 따라 스코어의 변동이 큰데  
+   기회가 된다면 시간 비용이 증가하더라도 하이퍼파라미터 튜닝 기술을 통해 자동화 시키고 싶습니다.  
+   
+2. **Use a embeding not a countVectorizer**  
+   현재는 countVectorizer를 사용하여 단어의 출현 빈도를 바탕으로 sparse matrix를 만들지만  
+   word2vec과 같은 embeding 기법을 사용하여 텍스트 자체를 벡터 공간에 매핑시킬 수 있다면  
+   훨씬 더 좋은 성능을 기대할 수 있을 것이라 생각합니다.
