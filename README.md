@@ -90,8 +90,67 @@ Employee data and salary from a specific company
   > 결과입니다.
 <img src="assets/major_result.PNG"/>
 
+- _'직무태그'_ , _'근무지역'_ 에 대해서는 **Modeling**에서 처리하도록 하겠습니다.
+
 ### Modeling
 * * *
+- Modeling은 **LightGBM**과 **Catboost** 두 모델을 사용해 보았습니다.
+
+> 첫 단계로 feature들을 타입에 맞게 구분해 주었습니다.  
+> 각 타입마다 서로 다른 pipeline에 투입시킬 계획입니다.  
+> 고유값을 많이 가지고 있는 NLP_features는 일반적인 범주형 변수와는 다르게 다뤄야 한다고 생각했습니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/17e3d978-6575-4a17-a20a-a4a910134d15)
+
+> Pipeline에 사용할 outlier remover와 feature selector를 정의해줍니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/ca2b2653-3077-4816-b848-1bf4add4dbe8)
+
+> 수치형 변수와 범주형 변수를 위한 pipeline을 구축합니다.
+> 1. 수치형 변수 pipeline은 결측치 평균값 대체와 이상치를 처리해줍니다.
+> 2. 범주형 변수 pipeline은 결측치 최빈값 대체와 **One-Hot-Encoding**을 수행합니다.
+
+    범주형 변수에 대해 One-Hot-Encoding을 진행하는 까닭은 개별 범주 내의 값들의 상호 연관관계가 없다고 생각했고, 
+    또한 고유값의 수가 상대적으로 적어 차원의 저주에 걸릴 가능성이 적다고 판단했기 때문입니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/26955dc5-2097-4327-8752-59a8a1996ec9)
+
+> NLP_features를 위한 pipeline을 구축합니다.
+> 1. 결측치를 '없음'으로 대체합니다.
+> 2. 다양한 방식으로 결합돼있는 텍스트를 모두 분리한 후 공백으로 합칩니다.
+> 3. 이를 countVectorizer를 사용해 텍스트를 효과적으로 sparse matrix로 표현합니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/dfcffab1-4ce5-4e1a-a5ee-19957866aeac)
+
+> _'직무태그'_ , _'대학전공'_ 에 대해서는 TruncatedSVD를 통해 차원을 축소시켜줍니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/3705a34c-3a3f-44a3-bb2f-ed7d8ce8a471)
+
+> X_train과 X_test에 fit_transform 메서드를 적용합니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/20f143a5-80c0-42f8-b100-18ba12d39a7c)
+
+- LightGBM 모델링
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/1fa663fe-d370-4fbd-8506-cb36f9381482)
+
+> Result
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/f337a5cd-e890-4499-a6b5-c73facea8269)
+
+- Catboost 모델링
+
+> Catboost 모델은 범주형 변수 인코딩을 필요로 하지 않습니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/e4e7f85f-7842-46ae-9024-b35b3abd5edf)
+
+> 따라서 범주형 변수의 One-Hot-Encoding 없이 바로 모델에 학습시킵니다.
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/49ae955d-8ea9-4c2b-b078-ded3b5b33ad1)
+
+> Result
+
+![image](https://github.com/miniwa00/mock-ML-competition-for-predicting-salary-of-office-worker/assets/47784464/35cded89-073e-4a50-b17f-08ded5fb9749)
 
 
 ### What needs to improve?
