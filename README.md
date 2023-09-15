@@ -58,23 +58,37 @@ Employee data and salary from a specific company
 
   > _'근무경력'_ 은 0년 00개월 형식입니다.  
   >  이를 모두 개월수로 바꾸어 수치형 변수로 바꿀 수 있을 것 같습니다.
+<img src="assets/df_work_year_preprocessed.PNG"/>
 
-  > 아주 잘 되었습니다.
+- _'대학성적'_ 컬럼을 살펴보겠습니다.  
+<img src="assets/univ_score_missing_value.PNG"/>
 
-- _'대학성적'_ 컬럼을 살펴보겠습니다.
-  
   > 출신 대학이 분명히 있으니 성적도 있을텐데 왜 결측치가 있는지는 잘 모르겠습니다.
   > 어쨌든 평균으로 대체하는 것이 가장 합리적일 것 같습니다.
+<img src="assets/univ_score_preprocess.PNG"/>
 
 - _'근무형태'_ 컬럼을 살펴보겠습니다.
-  
+<img src="assets/work_type_value_counts.PNG"/>
+<img src="assets/work_type_missing_value.PNG"/>
+
   > 근무형태가 결측치라는 것은 곧 신입이라는 뜻입니다.
+<img src="assets/work_type_missing_value_handling.PNG"/>
+
   > '정규직, 계약직,'과 같이 끝에 ,가 있는 경우가 있습니다. 따라서 마지막의 ,를 제거해주겠습니다.
+<img src="assets/work_type_remove_comma.PNG"/>
+
+  > 결과입니다.
+<img src="assets/work_type_result.PNG"/>
 
 - _'대학전공'_ 컬럼을 살펴보겠습니다.
+<img src="assets/major_value_counts.PNG"/>
   
   > 같은 전공임에도 다르게 표현한 경우가 너무 많습니다.
   > 따라서 이들을 모두 수작업으로 통일시켜주겠습니다.
+<img src="assets/major_grouping.PNG"/>
+
+  > 결과입니다.
+<img src="assets/major_result.PNG"/>
 
 ### Modeling
 * * *
